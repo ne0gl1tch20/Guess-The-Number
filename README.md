@@ -51,7 +51,7 @@
 1. Open **Pydroid 3** on your device
 2. Open the **three-drawer menu**, go to **Terminal**, and run:
    pip install pyside6 matplotlib
-3. Download `main.py` along with any necessary data files
+3. Download `main.py`, `recovery.py` along with any necessary data files
 4. Open and run `main.py` in Pydroid 3
 5. You're good to go! 🎮
 
