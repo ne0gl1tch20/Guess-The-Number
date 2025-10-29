@@ -43,11 +43,7 @@
    python main.py
 
 **Option 2: Run as EXE (Windows)**
-1. Make sure you have Python and `pyinstaller` installed:
-   pip install pyinstaller
-2. Build the EXE:
-   pyinstaller --onefile --windowed main.py
-3. The standalone EXE will appear in the `dist/` folder. Double-click to play!
+Download it through [Releases page.](https://https://github.com/ne0gl1tch20/Guess-The-Number/releases)
 
 ---
 
