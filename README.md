@@ -43,7 +43,17 @@
    python main.py
 
 **Option 2: Run as EXE (Windows)**
-Download it through [Releases page.](https://https://github.com/ne0gl1tch20/Guess-The-Number/releases)
+1. Download it through the [Releases page](https://github.com/ne0gl1tch20/Guess-The-Number/releases)
+2. Open the `.exe` file
+3. You're good to go!
+
+**Option 3: Run on Android (via Pydroid 3)**
+1. Open **Pydroid 3** on your device
+2. Open the **three-drawer menu**, go to **Terminal**, and run:
+   pip install pyside6 matplotlib
+3. Download `main.py` along with any necessary data files
+4. Open and run `main.py` in Pydroid 3
+5. You're good to go! 🎮
 
 ---
 
