@@ -37,10 +37,8 @@
 3. Clone the repository:
    git clone https://github.com/ne0gl1tch20/Guess-The-Number.git
 4. Navigate into the project folder and run the game:
-   cd Guess-The-Number
-   cd src
-   cd scripts
-   python main.py
+    ```cd Guess-The-Number\src\scripts```
+   ```python main.py```
 
 **Option 2: Run as EXE (Windows)**
 1. Download it through the [Releases page](https://github.com/ne0gl1tch20/Guess-The-Number/releases)
