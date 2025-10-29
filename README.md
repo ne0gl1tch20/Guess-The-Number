@@ -52,7 +52,7 @@ To see how to play: [User Manual](https://github.com/ne0gl1tch20/Guess-The-Numbe
 2. Open the **three-drawer menu**, go to **Terminal**, and run:
    pip install pyside6 matplotlib
 3. Download `main.py`, `recovery.py` along with any necessary data files
-4. Open and run `main.py` in Pydroid 3
+4. Open and run `main.py` in Pydroid 3. Beware that you might suffer in tight or small buttons out there, as your phone is not 16:9 unless you are in your own tablet.
 5. You're good to go! 🎮
 
 ---
