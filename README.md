@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **Guess-The-Number** is a fun and interactive game built using **PySide6**, which is more gamified, fancier, and is designed to challenge your **logic**, **speed**, and **intuition**. Can you guess the correct number before time runs out? Test your skills and have fun!
+[User Manual](https://github.com/ne0gl1tch20/Guess-The-Number/blob/main/README.md)
 
 ---
 
