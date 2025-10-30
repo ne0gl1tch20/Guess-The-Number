@@ -68,7 +68,7 @@ To see how to play: [User Manual](https://github.com/ne0gl1tch20/Guess-The-Numbe
 ---
 
 ## Screenshots 📸
-(![alt text](https://github.com/ne0gl1tch20/Guess-The-Number/blob/main/screenshots/gameplayexample.png))
+![alt text](https://github.com/ne0gl1tch20/Guess-The-Number/blob/main/screenshots/gameplayexample.png)
 
 ---
 
