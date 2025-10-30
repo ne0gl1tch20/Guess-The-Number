@@ -43,17 +43,18 @@ To see how to play: [User Manual](https://github.com/ne0gl1tch20/Guess-The-Numbe
    ```python main.py```
 
 **Option 2: Run as EXE (Windows)**
-1. Download it through the [Releases page](https://github.com/ne0gl1tch20/Guess-The-Number/releases)
+1. Download `GuessTheNumber.zip` through the [Releases page](https://github.com/ne0gl1tch20/Guess-The-Number/releases)
 2. Open the `.exe` file
 3. You're good to go!
 
 **Option 3: Run on Android (via Pydroid 3)**
-1. Open **Pydroid 3** on your device
-2. Open the **three-drawer menu**, go to **Terminal**, and run:
+1. Download `GuessTheNumberMobile.zip` through the [Releases page](https://github.com/ne0gl1tch20/Guess-The-Number/releases)
+2. Open **Pydroid 3** on your device
+3. Open the **three-drawer menu**, go to **Terminal**, and run:
    pip install pyside6 matplotlib
-3. Download `main.py`, `recovery.py` along with any necessary data files
-4. Open and run `main.py` in Pydroid 3. Note: Designed for tablets! On phones, buttons might feel squished 😬
-5. You're good to go! 🎮
+4. Download `main.py`, `recovery.py` along with any necessary data files
+5. Open and run `main.py` in Pydroid 3
+6. You're good to go! 🎮
 
 ---
 
