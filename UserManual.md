@@ -243,7 +243,7 @@ Each one describes what went wrong and how to fix it.
 
 Thank you for playing **Guess The Number**!
 
-* **Version:** 1.3.0 (The PySide6 Supercharged Edition)
+* **Version:** 0.3.0-prerelease
 * **Developer:** G0ld Ne0
 * **GUI Framework:** PySide6
 * **Data Visualization:** Matplotlib
