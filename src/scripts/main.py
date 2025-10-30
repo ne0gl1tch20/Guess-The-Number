@@ -1227,7 +1227,6 @@ class ConfettiEffect(QWidget):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.hide()
 
-        # Dummy GIF
         confetti_path = "confetti.gif"
         if not os.path.exists(confetti_path):
             try:
@@ -1235,8 +1234,8 @@ class ConfettiEffect(QWidget):
                 img = Image.new('RGB', (1, 1), color='red')
                 img.save(confetti_path, format="GIF")
             except ImportError:
-                with open(confetti_path, "w") as f:
-                    f.write("GIF89a\x01\x00\x01\x00\x00\xff\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;")
+                with open(confetti_path, "wb") as f:  # binary mode!
+                    f.write(b"GIF89a\x01\x00\x01\x00\x00\xff\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;")
                 print("Warning: Pillow not found, created a minimal static GIF placeholder.")
 
         self.movie = QMovie(confetti_path)
@@ -1262,7 +1261,7 @@ class ConfettiEffect(QWidget):
         if self.parent():
             self.setFixedSize(self.parent().size())
             if self.is_gif_valid:
-                self.movie.setScaledSize(self.parent().size())
+                self.movie.setScaledSize(self.size())
         super().showEvent(event)
 
     def _check_movie_finished(self, frame_number):
@@ -2956,17 +2955,7 @@ class MainWindow(QWidget):
         self.setWindowIcon(QIcon(icon_path))
         self.start_time = time.time()
 
-        # Create a dummy icon file if it doesn't exist
         icon_path = "icon.png"
-        if not os.path.exists(icon_path):
-            try:
-                from PIL import Image
-                img = Image.new('RGB', (16, 16), color='blue')
-                img.save(icon_path, format="PNG")
-            except ImportError:
-                print("Warning: Pillow not found, created a minimal static PNG placeholder.")
-                with open(icon_path, "wb") as f:
-                    f.write(b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x10\x00\x00\x00\x10\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\x01sRGB\x00\xae\xce\x1c\xe9\x00\x00\x00\x04gAMA\x00\x00\xb1\x8f\x0b\xfcA\x05\x00\x00\x00\tpHYs\x00\x00\x0e\xc3\x00\x00\x0e\xc3\x01\xc9o\xba\x9f\x00\x00\x00\x12IDATx\xda\xed\xc1\x01\x01\x00\x00\x00\xc2\xa0\xf7om\x00\x00\x00\x00IEND\xaeB`\x82')
 
         # --- DATA PATH ---
         self.data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
