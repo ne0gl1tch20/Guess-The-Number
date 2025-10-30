@@ -35,10 +35,10 @@ To see how to play: [User Manual](https://github.com/ne0gl1tch20/Guess-The-Numbe
 **Option 1: Run via Python**
 1. Install **Python 3.10+** from [python.org](https://www.python.org/)
 2. Install required dependencies:
-   pip install PySide6 matplotlib
-3. Clone the repository:
-   git clone https://github.com/ne0gl1tch20/Guess-The-Number.git
-4. Navigate into the project folder and run the game:
+   ```pip install PySide6 matplotlib```
+3. Download through releases: https://github.com/ne0gl1tch20/Guess-The-Number/releases
+4. Extract the folder using WinRAR
+5. Navigate into the project folder and run the game:
     ```cd Guess-The-Number\src\scripts```
    ```python main.py```
 
@@ -52,7 +52,7 @@ To see how to play: [User Manual](https://github.com/ne0gl1tch20/Guess-The-Numbe
 2. Open the **three-drawer menu**, go to **Terminal**, and run:
    pip install pyside6 matplotlib
 3. Download `main.py`, `recovery.py` along with any necessary data files
-4. Open and run `main.py` in Pydroid 3
+4. Open and run `main.py` in Pydroid 3. Beware that you might suffer in tight or small buttons out there, as your phone is not 16:9 unless you are in your own tablet.
 5. You're good to go! 🎮
 
 ---

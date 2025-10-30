@@ -256,4 +256,8 @@ Thank you for playing **Guess The Number**!
 * **Binary Search is Your Friend:** The fastest way to guess a number in a range is to always guess the middle number. This method (called a binary search) guarantees the win in the minimum number of moves!
 * **Leaderboard Strategy:** To get the best score, you need the **lowest number of guesses** in the **fastest time**. Practice your binary search!
 * **Backup Your Saves:** If you are paranoid about losing your amazing stats, periodically make a copy of the **`GuessTheNumber`** folder mentioned in Section 10!
+<<<<<<< HEAD
 * **Report Bugs:** Found an issue? Report it to **respitory** so we can make the game even better!
+=======
+* **Report Bugs:** Found an issue? Report it to **respitory** so we can make the game even better!
+>>>>>>> b49fc7ac73ccbb47a2b136dfe29f239bb1235ee1
