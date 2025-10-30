@@ -1545,7 +1545,7 @@ class GameView(QWidget):
         self.layout.setAlignment(Qt.AlignCenter)
 
         # Title and Game Info
-        self.title_label = QLabel("Random Number Guessing Game!")
+        self.title_label = QLabel("Guess The Number Game!")
         self.title_label.setObjectName("titleLabel")
         self.title_label.setStyleSheet("font-size: 28px; font-weight: bold;")
         self.title_label.setAlignment(Qt.AlignCenter)
