@@ -3133,8 +3133,8 @@ class MainWindow(QWidget):
         """Displays a detailed About dialog for the Guessing Game."""
         about_text = (
             "<h2>Supercharged Number Guessing Game</h2>"
-            "<p><b>Main Version:</b> 1.6<br>"
-            "<b>Recovery Version:</b> 1.0<br>"
+            "<p><b>Main Version:</b> 0.1.6-prerelease<br>"
+            "<b>Recovery Version:</b> 0.1.0-prerelease<br>"
             "<b>Developer:</b> G0ld Ne0</p>"
             "<hr>"
             "<p>This is a fun and interactive number guessing game designed to challenge "
