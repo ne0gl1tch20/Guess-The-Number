@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supercharged Number Guessing Game</title>
+  <link rel="icon" href="../data/icon.ico" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app" class="app" :class="{ dark: ui.darkMode }" :style="ui.appStyle">
+    <header class="app-header">
+      <!-- QLabel -> header title -->
+      <div class="brand">
+        <img class="brand-icon" src="../data/icon.ico" alt="App icon" />
+        <div>
+          <h1>Supercharged Number Guessing Game</h1>
+          <p>Vue 3 frontend with Qt WebBridge integration.</p>
+        </div>
+      </div>
+      <div class="status-badges">
+        <span class="badge">{{ connectionStatus }}</span>
+        <span class="badge">Difficulty: {{ state.game.difficulty }}</span>
+        <span class="badge" v-if="state.game.time_trial_mode">Time Trial</span>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <nav class="sidebar">
+        <!-- QPushButton (nav) -> button -->
+        <button :class="{ active: ui.view === 'game' }" @click="ui.view = 'game'">🎮 Game</button>
+        <button :class="{ active: ui.view === 'leaderboard' }" @click="ui.view = 'leaderboard'">🏆 Leaderboard</button>
+        <button :class="{ active: ui.view === 'achievements' }" @click="ui.view = 'achievements'">🌟 Achievements</button>
+        <button :class="{ active: ui.view === 'stats' }" @click="ui.view = 'stats'">📊 Statistics</button>
+        <button :class="{ active: ui.view === 'settings' }" @click="ui.view = 'settings'">⚙️ Settings</button>
+      </nav>
+
+      <main class="content">
+        <!-- QStackedWidget -> view switcher -->
+        <section v-if="ui.view === 'game'" class="panel">
+          <!-- QLabel -> title -->
+          <h2>Guess The Number Game!</h2>
+          <div class="info-row">
+            <!-- QLabel -> difficulty/guesses/time -->
+            <span>Difficulty: {{ state.game.difficulty }}</span>
+            <span>Guesses: {{ state.game.guesses_made }}</span>
+            <span v-if="state.game.time_trial_mode">Time: {{ state.game.time_remaining }}s</span>
+            <span v-else>Time: N/A</span>
+          </div>
+
+          <div class="card">
+            <h3>Make a Guess</h3>
+            <div class="form-row">
+              <!-- QLineEdit -> input -->
+              <input
+                type="number"
+                v-model.number="forms.guess"
+                :placeholder="`Enter number (${state.game.min_val}-${state.game.max_val})`"
+              />
+              <!-- QPushButton -> Guess -->
+              <button @click="submitGuess">Guess!</button>
+            </div>
+            <p class="helper" v-if="ui.lastGuessMessage">{{ ui.lastGuessMessage }}</p>
+          </div>
+
+          <div class="card">
+            <h3>Start a New Game</h3>
+            <div class="form-grid">
+              <!-- QComboBox -> select difficulty -->
+              <label>
+                Difficulty
+                <select v-model="forms.difficulty">
+                  <option>Easy</option>
+                  <option>Medium</option>
+                  <option>Hard</option>
+                  <option>Adaptive</option>
+                  <option>Time Trial</option>
+                </select>
+              </label>
+              <!-- QSpinBox -> min/max inputs -->
+              <label>
+                Min
+                <input type="number" v-model.number="forms.minVal" />
+              </label>
+              <label>
+                Max
+                <input type="number" v-model.number="forms.maxVal" />
+              </label>
+              <!-- QCheckBox -> time trial toggle -->
+              <label class="checkbox">
+                <input type="checkbox" v-model="forms.timeTrial" />
+                Time Trial Mode
+              </label>
+            </div>
+            <div class="button-row">
+              <!-- QPushButton -> New Game -->
+              <button @click="startNewGame">New Game</button>
+              <!-- QPushButton -> Time Trial -->
+              <button @click="startTimeTrial">Time Trial</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Hints &amp; Power-Ups</h3>
+            <!-- QLabel -> AI hint -->
+            <p class="hint">AI Hint: {{ ui.aiHint }}</p>
+            <div class="button-row">
+              <!-- QPushButton -> AI Hint -->
+              <button @click="requestAiHint" :disabled="ui.aiHintLoading">
+                {{ ui.aiHintLoading ? 'Thinking...' : 'Get AI Hint' }}
+              </button>
+            </div>
+            <div class="button-row">
+              <!-- QPushButton -> Power-ups -->
+              <button @click="usePowerUp('extra_hint')" :disabled="state.game.power_ups.extra_hint === 0">
+                Extra Hint ({{ state.game.power_ups.extra_hint }})
+              </button>
+              <button @click="usePowerUp('retry')" :disabled="state.game.power_ups.retry === 0">
+                Retry ({{ state.game.power_ups.retry }})
+              </button>
+              <button @click="usePowerUp('reveal_digit')" :disabled="state.game.power_ups.reveal_digit === 0">
+                Reveal Digit ({{ state.game.power_ups.reveal_digit }})
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section v-if="ui.view === 'leaderboard'" class="panel">
+          <h2>Leaderboard</h2>
+          <div class="form-row">
+            <label>
+              Difficulty
+              <!-- QComboBox -> leaderboard filter -->
+              <select v-model="ui.leaderboardDifficulty">
+                <option>Easy</option>
+                <option>Medium</option>
+                <option>Hard</option>
+                <option>Time Trial</option>
+              </select>
+            </label>
+          </div>
+          <!-- QTableWidget -> leaderboard table -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Guesses</th>
+                <th>Time</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(entry, index) in leaderboardEntries" :key="index">
+                <td>{{ entry.name }}</td>
+                <td>{{ entry.guesses }}</td>
+                <td>{{ entry.time }}</td>
+                <td>{{ entry.date }}</td>
+              </tr>
+              <tr v-if="leaderboardEntries.length === 0">
+                <td colspan="4">No scores yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section v-if="ui.view === 'achievements'" class="panel">
+          <h2>Achievements</h2>
+          <!-- QTableWidget -> achievements list -->
+          <div class="achievement-grid">
+            <div v-for="(achievement, name) in state.achievements" :key="name" class="achievement-card" :class="{ unlocked: achievement.unlocked }">
+              <h3>{{ achievement.badge }} {{ name }}</h3>
+              <p>{{ achievement.description }}</p>
+              <span>{{ achievement.unlocked ? 'Unlocked' : 'Locked' }}</span>
+            </div>
+          </div>
+        </section>
+
+        <section v-if="ui.view === 'stats'" class="panel">
+          <h2>Statistics</h2>
+          <!-- QLabel -> stats entries -->
+          <div class="stats-grid">
+            <div class="stat" v-for="(value, key) in state.stats" :key="key">
+              <span class="stat-label">{{ key }}</span>
+              <span class="stat-value">{{ value }}</span>
+            </div>
+          </div>
+        </section>
+
+        <section v-if="ui.view === 'settings'" class="panel">
+          <h2>Settings</h2>
+          <div class="form-grid">
+            <!-- QCheckBox -> hints enabled -->
+            <label class="checkbox">
+              <input type="checkbox" v-model="state.settings.hints_enabled" @change="updateSetting('hints_enabled', state.settings.hints_enabled)" />
+              Enable AI Hints
+            </label>
+            <!-- QCheckBox -> dark mode -->
+            <label class="checkbox">
+              <input type="checkbox" v-model="state.settings.dark_mode" @change="updateSetting('dark_mode', state.settings.dark_mode)" />
+              Dark Mode
+            </label>
+            <!-- QComboBox -> theme -->
+            <label>
+              Theme
+              <select v-model="state.settings.color_theme" @change="updateSetting('color_theme', state.settings.color_theme)">
+                <option>Default Light</option>
+                <option>Default Dark</option>
+                <option>Ocean Blue</option>
+                <option>Forest Green</option>
+              </select>
+            </label>
+            <!-- QSpinBox -> min/max default -->
+            <label>
+              Default Min
+              <input type="number" v-model.number="state.settings.min_val" @change="updateSetting('min_val', state.settings.min_val)" />
+            </label>
+            <label>
+              Default Max
+              <input type="number" v-model.number="state.settings.max_val" @change="updateSetting('max_val', state.settings.max_val)" />
+            </label>
+            <!-- QSlider -> volumes -->
+            <label>
+              SFX Volume
+              <input type="range" min="0" max="1" step="0.05" v-model.number="state.settings.sfx_volume" @input="updateSetting('sfx_volume', state.settings.sfx_volume)" />
+            </label>
+            <label>
+              Music Volume
+              <input type="range" min="0" max="1" step="0.05" v-model.number="state.settings.music_volume" @input="updateSetting('music_volume', state.settings.music_volume)" />
+            </label>
+            <!-- QCheckBox -> confetti -->
+            <label class="checkbox">
+              <input type="checkbox" v-model="state.settings.confetti_on_win" @change="updateSetting('confetti_on_win', state.settings.confetti_on_win)" />
+              Confetti on Win
+            </label>
+          </div>
+
+          <div class="button-row">
+            <!-- QPushButton -> export/import -->
+            <button @click="exportSettings">Export Settings</button>
+            <button @click="showImport = true">Import Settings</button>
+            <button @click="resetLeaderboard">Reset Leaderboard</button>
+            <button @click="resetAchievements">Reset Achievements</button>
+            <button @click="resetStatistics">Reset Statistics</button>
+          </div>
+
+          <div class="card" v-if="showImport">
+            <h3>Import Settings</h3>
+            <textarea v-model="forms.importData" rows="4" placeholder="Paste encoded settings"></textarea>
+            <div class="button-row">
+              <button @click="importSettings">Apply Import</button>
+              <button class="secondary" @click="showImport = false">Cancel</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <aside class="notifications">
+      <!-- QLabel -> notifications area -->
+      <div v-for="(notice, index) in ui.notifications" :key="index" class="notification" :class="notice.type">
+        <strong>{{ notice.type.toUpperCase() }}</strong>
+        <p>{{ notice.message }}</p>
+      </div>
+    </aside>
+  </div>
+
+  <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
